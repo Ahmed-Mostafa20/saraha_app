@@ -1,0 +1,4 @@
+node_modules/
+.env
+./keys/keys/admin_private.key
+/keys/keys/admin_public.key
