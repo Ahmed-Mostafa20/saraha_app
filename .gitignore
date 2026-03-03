@@ -1,4 +1,4 @@
 node_modules/
 .env
-./keys/keys/admin_private.key
-/keys/keys/admin_public.key
+keys/admin_private.key
+keys/user_private.key
