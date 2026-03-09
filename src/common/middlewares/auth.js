@@ -1,4 +1,4 @@
-import { UnauthorizedException } from '../../responce/index.js'
+import { UnauthorizedException } from '../../common/index.js'
 import { decodeToken } from '../security/security.js'
 
 
