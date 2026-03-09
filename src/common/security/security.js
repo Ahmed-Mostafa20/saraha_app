@@ -1,6 +1,6 @@
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
-import { BadRequestException } from '../../responce/index.js'
+import { BadRequestException } from '../../common/index.js'
 
 const admin_privateKey = fs.readFileSync('keys/admin_private.key', 'utf-8')
 const user_privateKey = fs.readFileSync('keys/user_private.key', 'utf-8')
