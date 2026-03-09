@@ -49,6 +49,38 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    loginCount: {
+        type: Number,
+        default: 0
+    },
+    lockUntil: {
+        type: Date,
+    },
+    twoStepEnabled: {
+        type: Boolean,
+        default: false
+    },
+    otpCode: {
+        type: String
+    },
+    otpExpires: {
+        type: Date
+    },
+    emailOtpCode: {
+        type: String
+    },
+    emailOtpExpires: {
+        type: Date
+    },
+    isEmailVerified: {
+        type: Boolean,
+        default: false
+    },
+    deleteAfter: {
+        type: Date,
+        default: () => Date.now() + 24 * 60 * 60 * 1000,
+        index: { expires: 0 }
+    }
 
 },
     {
