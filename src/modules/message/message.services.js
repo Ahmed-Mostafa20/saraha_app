@@ -1,5 +1,5 @@
 import { messageModel, userModel } from '../../database/index.js'
-import { BadRequestException, NotFoundException } from '../../responce/index.js'
+import { BadRequestException, NotFoundException } from '../../common/index.js'
 
 
 export const sendMessage = async (data, id) => {
