@@ -1,4 +1,4 @@
-import { mood } from "../../config/index.js"
+import { mood } from "../../../config/index.js"
 
 export const ErrorResponse = ({ status = 400, message = "Something went wrong", extra = undefined } = {}) => {
     throw new Error(message, { cause: { status, extra } })
