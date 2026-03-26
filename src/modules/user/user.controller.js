@@ -1,6 +1,6 @@
 import express from 'express'
 import { auth, SuccessResponse, validation, multer_local, extensions } from '../../common/index.js'
-import { deleteUser, sendOtpToForgetPassword, updatePassword, updateUser, verifyOtpForForgetPassword } from './user.services.js'
+import { deleteUser, getUserData, sendOtpToForgetPassword, shareProfileLink, updatePassword, updateUser, verifyOtpForForgetPassword } from './user.services.js'
 import { forgotPasswordValidationSchema, updatePasswordValidationSchema, updateUserValidationSchema } from './user.validation.js'
 
 const router = express.Router()
@@ -27,5 +27,12 @@ router.put('/verify-otp-for-forget-password', multer_local().none(), validation(
     const data = await verifyOtpForForgetPassword(req.body)
     return SuccessResponse({ res, status: 200, message: "password updated", data })
 })
-
+router.get('/get-profile-link', auth, multer_local().none(), async (req, res) => {
+    const data = await shareProfileLink(req.userId)
+    return SuccessResponse({ res, status: 200, message: "profile link", data })
+})
+router.get('/get-profile-data', multer_local().none(), async (req, res) => {
+    const data = await getUserData(req.body)
+    return SuccessResponse({ res, status: 200, message: "profile link", data })
+})
 export { router as UserRouter }

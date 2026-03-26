@@ -1,6 +1,6 @@
 import { userModel } from '../../database/index.js'
 import { BadRequestException, comparePassword, hashPassword, NotFoundException, sendEmail } from '../../common/index.js'
-
+import { baseURL } from '../../../config/index.js'
 
 
 export const updateUser = async (userId, data, file) => {
@@ -74,4 +74,21 @@ export const verifyOtpForForgetPassword = async (data) => {
     await user.save()
     return user
 }
+export const shareProfileLink = async (userId) => {
+    const user = await userModel.findById(userId)
+    if (!user) {
+        return NotFoundException({ message: 'User not found' })
+    }
+    const profileLink = `${baseURL}${user.sharedName}`
+    return profileLink
+}
 
+export const getUserData = async (data) => {
+    let { sharedLink } = data
+    let sharedName = sharedLink.split('/')[3]
+    const user = await userModel.findOne({ sharedName }, {
+        password: 0, otpCode: 0, otpExpires: 0, deleteAfter: 0,
+        isEmailVerified: 0, emailOtpExpires: 0, emailOtpCode: 0, twoStepEnabled: 0
+    })
+    return user
+}
