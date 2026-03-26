@@ -8,4 +8,6 @@ const port = process.env.PORT
 const salt = process.env.SALT
 const emailHost = process.env.EMAIL_HOST
 const emailPassword = process.env.PASSWORD
-export  { mongoURL, mood, port, salt, emailHost, emailPassword }
+const baseURL = process.env.BASE_URL
+
+export  { mongoURL, mood, port, salt, emailHost, emailPassword, baseURL }
