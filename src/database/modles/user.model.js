@@ -80,6 +80,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: () => Date.now() + 24 * 60 * 60 * 1000,
         index: { expires: 0 }
+    },
+    sharedName:{
+        type: String,
+        unique: true,
     }
 
 },
