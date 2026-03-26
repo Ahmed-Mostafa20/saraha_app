@@ -6,7 +6,7 @@ import { sendEmail } from '../../common/index.js'
 
 
 export const signUp = async (data, file) => {
-    const { userName, email, password, provider } = data
+    const { email, password , userName, provider, sharedName} = data
     const userExists = await userModel.findOne({ email })
     if (userExists) {
         return BadRequestException({ message: 'User already exists' })
@@ -15,7 +15,10 @@ export const signUp = async (data, file) => {
     const OTP = Math.floor(100000 + Math.random() * 900000).toString()
     let emailOtpCode = OTP
     let emailOtpExpires = Date.now() + 24 * 60 * 60 * 1000
-    const user = await userModel.create({ userName, email, password: hashedPassword, provider, profileImage: file ? file.path : '', emailOtpCode, emailOtpExpires })
+    const user = await userModel.create({
+        userName, email, password: hashedPassword, provider,
+        sharedName, profileImage: file ? file.path : '', emailOtpCode, emailOtpExpires
+    })
     sendEmail(user.email, 'email verification code', `Your OTP code to  verify your email is 
          ${OTP}. It will expire in 24 hours.`)
     return user
@@ -140,7 +143,7 @@ export const verfiyOtp = async (email, otp, host) => {
 }
 
 export const verifyEmail = async (data) => {
-    let {email , otp } = data
+    let { email, otp } = data
     const user = await userModel.findOne({ email })
     if (!user) {
         return NotFoundException({ message: 'User not found' })
@@ -169,7 +172,7 @@ export const resendEmailVerificationOtp = async (email) => {
         return BadRequestException({ message: 'Email is already verified' })
     }
     const OTP = Math.floor(100000 + Math.random() * 900000).toString()
-    user.emailOtpCode = OTP 
+    user.emailOtpCode = OTP
     user.emailOtpExpires = Date.now() + 24 * 60 * 60 * 1000
     await user.save()
     await sendEmail(user.email, 'Your OTP Code', `Your OTP code to verify your email is ${OTP}. It will expire in 24 hours.`)
